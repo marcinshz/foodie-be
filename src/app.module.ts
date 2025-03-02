@@ -2,6 +2,9 @@ import {Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
+import {UserModule} from './user/user.module';
+import {User} from "./user/user.entity";
+import {AuthModule} from './auth/auth.module';
 
 @Module({
     imports: [
@@ -12,9 +15,12 @@ import {TypeOrmModule} from '@nestjs/typeorm';
             username: 'postgres',
             password: 'admin',
             database: 'foodie-db',
-            entities: [],
-            synchronize: true
+            entities: [User],
+            synchronize: true,
+            autoLoadEntities: true
         }),
+        UserModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],
