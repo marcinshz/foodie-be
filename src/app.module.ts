@@ -2,8 +2,9 @@ import {Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
+import {UserModule} from './user/user.module';
 import {User} from "./user/user.entity";
+import {AuthModule} from './auth/auth.module';
 
 @Module({
     imports: [
@@ -15,9 +16,11 @@ import {User} from "./user/user.entity";
             password: 'admin',
             database: 'foodie-db',
             entities: [User],
-            synchronize: true
+            synchronize: true,
+            autoLoadEntities: true
         }),
         UserModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],
