@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "./user.entity";
 import {Repository} from "typeorm";
@@ -32,10 +32,10 @@ export class UserService {
 
     async createUser(credentials: UserCredentialsDto): Promise<User> {
         const existingUser = await this.findUser(credentials.username);
-        if (existingUser) throw new Error('Username taken');
+        if (existingUser)   throw new HttpException('Conflict', HttpStatus.CONFLICT);
 
         credentials.password = await bcrypt.hash(credentials.password, await bcrypt.genSalt());
-        const user = await this.userRepository.create(credentials);
+        const user = this.userRepository.create(credentials);
 
         return await this.userRepository.save(user);
     }
