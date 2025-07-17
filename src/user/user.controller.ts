@@ -5,7 +5,8 @@ import {User} from "./user.entity";
 
 @Controller('user')
 export class UserController {
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService) {
+    }
 
     @Post()
     async createUser(@Body() credentials: UserCredentialsDto): Promise<User> {
