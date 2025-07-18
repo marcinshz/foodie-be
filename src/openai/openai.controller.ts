@@ -12,4 +12,9 @@ export class OpenaiController {
     async getSingleDishDefault(@Body() singleDishInput: SingleDishInputDto): Promise<SingleDishOutputDto> {
         return await this.openaiService.generateSingleDishDefault(singleDishInput);
     }
+
+    @Post('single-dish-image')
+    async getSingleDishImage(@Body() singleDishInput: SingleDishOutputDto): Promise<string> {
+        return this.openaiService.generateDishImage(singleDishInput);
+    }
 }

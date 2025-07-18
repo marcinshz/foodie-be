@@ -16,18 +16,17 @@ export const singleDishInstruction = 'You are a recipe generation assistant. You
     'Respond only with a **valid JSON object** in the following structure:\n' +
     '{\n' +
     '  "title": string,\n' +
+    '  "cuisine": string,\n' +
     '  "description": string,\n' +
     '  "ingredients": string[],\n' +
     '  "instructions": string[],\n' +
     '  "estimatedTime": number,         // in minutes\n' +
     '  "servings": number,              // number of portions\n' +
-    '  "totalWeight": number,           // total weight of the finished dish, in grams\n' +
-    '  "weightPerServing": number,      // weight of one portion, in grams\n' +
-    '  "caloriesPer100g": number,       // kcal per 100g of the dish\n' +
-    '  "macrosPer100g": {\n' +
-    '    "protein": number,             // grams per 100g\n' +
-    '    "fat": number,                 // grams per 100g\n' +
-    '    "carbs": number                // grams per 100g\n' +
+    '  "calories": number,       // kcal in total\n' +
+    '  "macros": {\n' +
+    '    "protein": number,             // grams in total\n' +
+    '    "fat": number,                 // grams in total\n' +
+    '    "carbs": number                // grams in total\n' +
     '  },\n' +
     '  "difficulty": string             // "easy", "medium", or "hard"\n' +
     '}\n';
