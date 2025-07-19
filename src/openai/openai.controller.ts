@@ -2,6 +2,7 @@ import {Body, Controller, Post} from '@nestjs/common';
 import {OpenaiService} from "./openai.service";
 import {SingleDishInputDto} from "./dtos/single-dish-input.dto";
 import {SingleDishOutputDto} from "./dtos/single-dish-output.dto";
+import {ImageDto} from "./dtos/image.dto";
 
 @Controller('openai')
 export class OpenaiController {
@@ -14,7 +15,7 @@ export class OpenaiController {
     }
 
     @Post('single-dish-image')
-    async getSingleDishImage(@Body() singleDishInput: SingleDishOutputDto): Promise<string> {
+    async getSingleDishImage(@Body() singleDishInput: SingleDishOutputDto): Promise<ImageDto> {
         return this.openaiService.generateDishImage(singleDishInput);
     }
 }

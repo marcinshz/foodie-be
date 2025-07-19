@@ -28,3 +28,4 @@ export class SingleDishInputDto {
     @ApiProperty()
     allergens?: Array<string>;
 }
+
