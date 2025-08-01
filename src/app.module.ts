@@ -7,6 +7,7 @@ import {User} from "./user/user.entity";
 import {AuthModule} from './auth/auth.module';
 import { OpenaiModule } from './openai/openai.module';
 import { ConfigModule } from '@nestjs/config';
+import { RecipeModule } from './recipe/recipe.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { ConfigModule } from '@nestjs/config';
         UserModule,
         AuthModule,
         OpenaiModule,
+        RecipeModule,
     ],
     controllers: [AppController],
     providers: [AppService],
