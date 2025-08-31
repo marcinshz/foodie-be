@@ -27,6 +27,12 @@ export class RecipeService {
         return await this.recipeRepository.save(recipe);
     }
 
+    async deleteRecipe(id: string): Promise<Recipe> {
+        const recipe = await this.recipeRepository.findOneBy({id});
+        if (!recipe) throw new Error('Recipe not found');
+        return await this.recipeRepository.remove(recipe);
+    }
+
     async getUserRecipes(userId: string): Promise<Recipe[]> {
         return (await this.recipeRepository.find({
             where: {

@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
 import {RecipeService} from "./recipe.service";
 import {SaveRecipeDto} from "./dtos/save-recipe.dto";
 
@@ -10,6 +10,11 @@ export class RecipeController {
     @Post()
     saveRecipe(@Body() saveRecipeDto: SaveRecipeDto) {
         return this.recipeService.saveRecipe(saveRecipeDto);
+    }
+
+    @Delete('/:id')
+    deleteRecipe(@Param('id') id: string) {
+        return this.recipeService.deleteRecipe(id);
     }
 
     @Get('/:userId')
