@@ -17,9 +17,15 @@ export class RecipeController {
         return this.recipeService.deleteRecipe(id);
     }
 
-    @Get('/:userId')
+    @Get('/by-user/:userId')
     getUserRecipes(@Param('userId') userId: string) {
         return this.recipeService.getUserRecipes(userId);
+    }
+
+    @Get('/:id')
+    getRecipe(@Param('id') id: string) {
+        console.log(id);
+        return this.recipeService.getRecipe(id);
     }
 
 }

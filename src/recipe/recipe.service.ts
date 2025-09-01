@@ -47,4 +47,14 @@ export class RecipeService {
             return recipe;
         });
     }
+
+    async getRecipe(id: string): Promise<Recipe> {
+        const recipe = await this.recipeRepository.findOneBy({id});
+        console.log(recipe)
+        if (!recipe) throw new Error('Recipe not found');
+        recipe.ingredients = JSON.parse(recipe.ingredients);
+        recipe.instructions = JSON.parse(recipe.instructions);
+        recipe.macros = JSON.parse(recipe.macros);
+        return recipe;
+    }
 }
