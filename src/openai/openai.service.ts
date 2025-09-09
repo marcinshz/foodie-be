@@ -3,9 +3,11 @@ import OpenAIApi from 'openai';
 import {ConfigService} from "@nestjs/config";
 import {defaultConfig} from "./model.configurations";
 import {SingleDishInputDto} from "./dtos/single-dish-input.dto";
-import {singleDishInstruction} from "./model.instructions";
+import {singleDishInstruction, mealPlanInstruction} from "./model.instructions";
 import {SingleDishOutputDto} from "./dtos/single-dish-output.dto";
 import {ImageDto} from "./dtos/image.dto";
+import {MealPlanInputDto} from "./dtos/meal-plan-input.dto";
+import {MealPlanOutputDto} from "./dtos/meal-plan-output.dto";
 
 @Injectable()
 export class OpenaiService {
@@ -35,6 +37,8 @@ export class OpenaiService {
         return JSON.parse(response.output_text);
     }
 
-    async generateMealPlan() {
+    async generateMealPlanDefault(input: MealPlanInputDto): Promise<MealPlanOutputDto> {
+        const response = await this.openai.responses.create(defaultConfig(input, mealPlanInstruction));
+        return JSON.parse(response.output_text);
     }
 }

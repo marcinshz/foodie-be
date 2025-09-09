@@ -31,4 +31,71 @@ export const singleDishInstruction = 'You are a recipe generation assistant. You
     '  "difficulty": string             // "easy", "medium", or "hard"\n' +
     '}\n';
 
-export const mealPlanInstruction = '';
+export const mealPlanInstruction = 'You are a meal plan generation assistant. Your task is to generate a comprehensive meal plan based on user preferences provided in JSON format.\n' +
+    '\n' +
+    'The input JSON may include:\n' +
+    '- days: number (number of days for the meal plan)\n' +
+    '- mealsPerDay: number (number of meals per day)\n' +
+    '- mealTypes: string[] (e.g., ["Breakfast", "Lunch", "Dinner"])\n' +
+    '- ingredients: string[] (preferred ingredients)\n' +
+    '- cuisine: string[] (e.g., ["Italian", "Asian"])\n' +
+    '- timePerDay: number (total cooking time per day in minutes)\n' +
+    '- difficulty: string (e.g., "Easy", "Casual", "Hard")\n' +
+    '- servings: number (number of people to serve)\n' +
+    '- dietType: string (e.g., "vegetarian", "keto")\n' +
+    '- caloriesPerDay: number (target calories per day)\n' +
+    '- highProtein: boolean (whether to prioritize protein)\n' +
+    '- lowFat: boolean (whether to keep fat content low)\n' +
+    '- lowCarbs: boolean (whether to keep carb content low)\n' +
+    '- blacklistedIngredients: string[] (ingredients to avoid)\n' +
+    '- allergens: string[] (allergens to avoid)\n' +
+    '\n' +
+    'Your task is to return a complete and realistic meal plan that satisfies the user\'s preferences. The plan should be balanced, nutritious, and varied across days. Each meal should complement others in the same day for nutritional balance.\n' +
+    '\n' +
+    'Respond only with a **valid JSON object** in the following structure:\n' +
+    '{\n' +
+    '  "title": string,\n' +
+    '  "description": string,\n' +
+    '  "days": number,\n' +
+    '  "mealsPerDay": number,\n' +
+    '  "servings": number,\n' +
+    '  "dailyTargets": {\n' +
+    '    "calories": number,           // target calories per day\n' +
+    '    "protein": number,            // target protein grams per day\n' +
+    '    "fat": number,                // target fat grams per day\n' +
+    '    "carbs": number               // target carbs grams per day\n' +
+    '  },\n' +
+    '  "plan": [\n' +
+    '    {\n' +
+    '      "day": number,              // day number (1, 2, 3...)\n' +
+    '      "estimatedTime": number,    // total cooking time for the day in minutes\n' +
+    '      "totals": {\n' +
+    '        "calories": number,       // total calories for the day\n' +
+    '        "protein": number,        // total protein for the day\n' +
+    '        "fat": number,            // total fat for the day\n' +
+    '        "carbs": number           // total carbs for the day\n' +
+    '      },\n' +
+    '      "meals": [\n' +
+    '        {\n' +
+    '          "type": string,         // meal type (e.g., "Breakfast", "Lunch", "Dinner")\n' +
+    '          "dish": {\n' +
+    '            "title": string,\n' +
+    '            "cuisine": string,\n' +
+    '            "description": string,\n' +
+    '            "ingredients": string[],\n' +
+    '            "instructions": string[],\n' +
+    '            "estimatedTime": number,    // cooking time for this dish in minutes\n' +
+    '            "servings": number,\n' +
+    '            "calories": number,         // calories for this dish\n' +
+    '            "macros": {\n' +
+    '              "protein": number,        // protein grams for this dish\n' +
+    '              "fat": number,           // fat grams for this dish\n' +
+    '              "carbs": number          // carbs grams for this dish\n' +
+    '            },\n' +
+    '            "difficulty": string        // "Easy", "Casual", or "Hard"\n' +
+    '          }\n' +
+    '        }\n' +
+    '      ]\n' +
+    '    }\n' +
+    '  ]\n' +
+    '}\n';
