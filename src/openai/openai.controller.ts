@@ -5,6 +5,7 @@ import {SingleDishOutputDto} from "./dtos/single-dish-output.dto";
 import {ImageDto} from "./dtos/image.dto";
 import {MealPlanInputDto} from "./dtos/meal-plan-input.dto";
 import {MealPlanOutputDto} from "./dtos/meal-plan-output.dto";
+import {ReplaceDishInputDto} from "./dtos/replace-dish-input.dto";
 
 @Controller('openai')
 export class OpenaiController {
@@ -24,5 +25,10 @@ export class OpenaiController {
     @Post('meal-plan-default')
     async getMealPlanDefault(@Body() mealPlanInput: MealPlanInputDto): Promise<MealPlanOutputDto> {
         return await this.openaiService.generateMealPlanDefault(mealPlanInput);
+    }
+
+    @Post('replace-dish')
+    async getReplacementDish(@Body() replaceDishInput: ReplaceDishInputDto): Promise<SingleDishOutputDto> {
+        return await this.openaiService.generateReplacementDish(replaceDishInput);
     }
 }
