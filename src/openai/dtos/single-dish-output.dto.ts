@@ -1,16 +1,16 @@
 export type SingleDishOutputDto = {
     title: string;
-    cuisine:string;
+    cuisine: string;
     description: string;
     ingredients: Array<string>;
     instructions: Array<string>;
-    estimatedTime: number;
-    servings: number;
-    calories: number;
+    estimatedTime: number; // in minutes
+    servings: number; // number of portions the recipe makes
+    calories: number; // kcal per single serving
     macros: {
-        protein: number;
-        fat: number;
-        carbs: number;
-    },
+        protein: number; // protein grams per single serving
+        fat: number; // fat grams per single serving
+        carbs: number; // carbs grams per single serving
+    };
     difficulty: string;
 }

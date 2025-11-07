@@ -21,15 +21,17 @@ export const singleDishInstruction = 'You are a recipe generation assistant. You
     '  "ingredients": string[],\n' +
     '  "instructions": string[],\n' +
     '  "estimatedTime": number,         // in minutes\n' +
-    '  "servings": number,              // number of portions\n' +
-    '  "calories": number,       // kcal in total\n' +
+    '  "servings": number,              // number of portions the recipe makes\n' +
+    '  "calories": number,              // kcal per single serving\n' +
     '  "macros": {\n' +
-    '    "protein": number,             // grams in total\n' +
-    '    "fat": number,                 // grams in total\n' +
-    '    "carbs": number                // grams in total\n' +
+    '    "protein": number,             // protein grams per single serving\n' +
+    '    "fat": number,                 // fat grams per single serving\n' +
+    '    "carbs": number                // carbs grams per single serving\n' +
     '  },\n' +
     '  "difficulty": string             // "easy", "medium", or "hard"\n' +
-    '}\n';
+    '}\n' +
+    '\n' +
+    'IMPORTANT: Calories and macros should represent nutritional content PER SINGLE SERVING, NOT for the entire dish or per 100g.';
 
 export const mealPlanInstruction = 'You are a meal plan generation assistant. Your task is to generate a comprehensive meal plan based on user preferences provided in JSON format.\n' +
     '\n' +
@@ -85,12 +87,12 @@ export const mealPlanInstruction = 'You are a meal plan generation assistant. Yo
     '            "ingredients": string[],\n' +
     '            "instructions": string[],\n' +
     '            "estimatedTime": number,    // cooking time for this dish in minutes\n' +
-    '            "servings": number,\n' +
-    '            "calories": number,         // calories for this dish\n' +
+    '            "servings": number,         // number of portions this dish makes\n' +
+    '            "calories": number,         // kcal per single serving\n' +
     '            "macros": {\n' +
-    '              "protein": number,        // protein grams for this dish\n' +
-    '              "fat": number,           // fat grams for this dish\n' +
-    '              "carbs": number          // carbs grams for this dish\n' +
+    '              "protein": number,        // protein grams per single serving\n' +
+    '              "fat": number,            // fat grams per single serving\n' +
+    '              "carbs": number           // carbs grams per single serving\n' +
     '            },\n' +
     '            "difficulty": string        // "Easy", "Casual", or "Hard"\n' +
     '          }\n' +
@@ -98,4 +100,6 @@ export const mealPlanInstruction = 'You are a meal plan generation assistant. Yo
     '      ]\n' +
     '    }\n' +
     '  ]\n' +
-    '}\n';
+    '}\n' +
+    '\n' +
+    'IMPORTANT: For each dish, calories and macros should represent nutritional content PER SINGLE SERVING, NOT for the entire dish or per 100g. The daily totals should sum up the per-serving values of all dishes for that day (multiply by servings if needed for accurate daily totals).';
