@@ -76,5 +76,32 @@ export class MealPlanService {
             plan: JSON.parse(mealPlan.plan)
         };
     }
+
+    async updateMealPlan(id: string, updateData: any): Promise<any> {
+        const mealPlan = await this.mealPlanRepository.findOneBy({id});
+        if (!mealPlan) throw new Error('Meal plan not found');
+
+        // Update the meal plan fields
+        mealPlan.title = updateData.title;
+        mealPlan.description = updateData.description;
+        mealPlan.days = updateData.days;
+        mealPlan.mealsPerDay = updateData.mealsPerDay;
+        mealPlan.servings = updateData.servings;
+        mealPlan.dailyTargets = updateData.dailyTargets ? JSON.stringify(updateData.dailyTargets) : null;
+        mealPlan.plan = JSON.stringify(updateData.plan);
+
+        const savedMealPlan = await this.mealPlanRepository.save(mealPlan);
+        
+        return {
+            id: savedMealPlan.id,
+            title: savedMealPlan.title,
+            description: savedMealPlan.description,
+            days: savedMealPlan.days,
+            mealsPerDay: savedMealPlan.mealsPerDay,
+            servings: savedMealPlan.servings,
+            dailyTargets: savedMealPlan.dailyTargets ? JSON.parse(savedMealPlan.dailyTargets) : undefined,
+            plan: JSON.parse(savedMealPlan.plan)
+        };
+    }
 }
 

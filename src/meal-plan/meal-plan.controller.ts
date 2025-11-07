@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {MealPlanService} from "./meal-plan.service";
 import {SaveMealPlanDto} from "./dtos/save-meal-plan.dto";
 
@@ -25,6 +25,11 @@ export class MealPlanController {
     @Get('/:id')
     getMealPlan(@Param('id') id: string) {
         return this.mealPlanService.getMealPlan(id);
+    }
+
+    @Put('/:id')
+    updateMealPlan(@Param('id') id: string, @Body() updateData: any) {
+        return this.mealPlanService.updateMealPlan(id, updateData);
     }
 }
 
