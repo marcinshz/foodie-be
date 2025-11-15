@@ -5,7 +5,7 @@ export const defaultConfig = (input: SingleDishInputDto | MealPlanInputDto, inst
     return {
         model: "gpt-4.1",
         input: JSON.stringify(input),
-        instructions,
+        instructions: instructions + '\n\nREMINDER: Respond with ONLY valid JSON. No markdown, no explanations, no additional text.',
     }
 }
 

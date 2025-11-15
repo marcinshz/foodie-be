@@ -50,5 +50,16 @@ export class SaveMealPlanDto {
             };
         }>;
     }>;
+    @ApiProperty({ required: false })
+    shoppingLists?: Array<{
+        shoppingDay: number;
+        validForDays: Array<number>;
+        items: Array<{
+            ingredient: string;
+            estimatedShelfLife: number;
+            usedInDays: Array<number>;
+            category?: string;
+        }>;
+    }>;
 }
 

@@ -39,4 +39,14 @@ export type MealPlanOutputDto = {
             };
         }>;
     }>;
+    shoppingLists?: Array<{
+        shoppingDay: number; // Day number when shopping should be done
+        validForDays: Array<number>; // Days this shopping covers (e.g., [1,2,3,4,5,6,7])
+        items: Array<{
+            ingredient: string; // Name of ingredient with quantity
+            estimatedShelfLife: number; // Days until ingredient expires
+            usedInDays: Array<number>; // Days this ingredient is used
+            category?: string; // e.g., "Produce", "Dairy", "Meat", "Pantry", "Frozen"
+        }>;
+    }>;
 }

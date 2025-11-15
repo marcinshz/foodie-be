@@ -31,4 +31,6 @@ export class MealPlanInputDto {
     blacklistedIngredients?: Array<string>;
     @ApiProperty()
     allergens?: Array<string>;
+    @ApiProperty()
+    shoppingFrequencyDays?: number; // How often to shop (e.g., 7 for once a week, 3 for every 3 days)
 }

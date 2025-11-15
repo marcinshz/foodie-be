@@ -40,7 +40,14 @@ export class OpenaiService {
 
     async generateMealPlanDefault(input: MealPlanInputDto): Promise<MealPlanOutputDto> {
         const response = await this.openai.responses.create(defaultConfig(input, mealPlanInstruction));
-        return JSON.parse(response.output_text);
+        
+        try {
+            return JSON.parse(response.output_text);
+        } catch (error) {
+            console.error('Failed to parse meal plan response:', error);
+            console.error('Raw response:', response.output_text);
+            throw new Error(`Invalid JSON response from AI: ${error.message}`);
+        }
     }
 
     async generateReplacementDish(input: ReplaceDishInputDto): Promise<SingleDishOutputDto> {
