@@ -11,18 +11,18 @@ export class Recipe {
     cuisine: string;
     @Column()
     description: string;
-    @Column()
-    ingredients: string;
-    @Column()
-    instructions: string;
+    @Column('json')
+    ingredients: any;
+    @Column('json')
+    instructions: any;
     @Column()
     estimatedTime: number;
     @Column()
     servings: number;
     @Column()
     calories: number;
-    @Column()
-    macros: string;
+    @Column('json')
+    macros: any;
     @Column()
     difficulty: string;
 

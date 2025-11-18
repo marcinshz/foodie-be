@@ -16,10 +16,10 @@ export class MealPlan {
     mealsPerDay: number;
     @Column()
     servings: number;
-    @Column({ type: 'text', nullable: true })
-    dailyTargets: string; // JSON stringified
-    @Column('text')
-    plan: string; // JSON stringified
+    @Column({ type: 'json', nullable: true })
+    dailyTargets: any;
+    @Column('json')
+    plan: any;
 
     @ManyToOne(() => User, (user) => user.mealPlans)
     user: User;

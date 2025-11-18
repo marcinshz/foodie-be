@@ -30,7 +30,7 @@ export class ShoppingListService {
             const shoppingList = this.shoppingListRepository.create({
                 shoppingDay: listData.shoppingDay,
                 validForDays: listData.validForDays,
-                items: JSON.stringify(listData.items),
+                items: listData.items,
                 isPinned: false,
                 mealPlan,
                 user
@@ -51,9 +51,8 @@ export class ShoppingListService {
         });
 
         return shoppingLists.map(list => {
-            const items = JSON.parse(list.items);
             // Ensure each item has a checked property
-            const itemsWithChecked = items.map(item => ({
+            const itemsWithChecked = list.items.map(item => ({
                 ...item,
                 checked: item.checked !== undefined ? item.checked : false
             }));
@@ -80,9 +79,8 @@ export class ShoppingListService {
         });
 
         return shoppingLists.map(list => {
-            const items = JSON.parse(list.items);
             // Ensure each item has a checked property
-            const itemsWithChecked = items.map(item => ({
+            const itemsWithChecked = list.items.map(item => ({
                 ...item,
                 checked: item.checked !== undefined ? item.checked : false
             }));
@@ -137,13 +135,11 @@ export class ShoppingListService {
         const shoppingList = await this.shoppingListRepository.findOneBy({id});
         if (!shoppingList) throw new Error('Shopping list not found');
         
-        const items = JSON.parse(shoppingList.items);
-        if (itemIndex < 0 || itemIndex >= items.length) {
+        if (itemIndex < 0 || itemIndex >= shoppingList.items.length) {
             throw new Error('Invalid item index');
         }
         
-        items[itemIndex].checked = checked;
-        shoppingList.items = JSON.stringify(items);
+        shoppingList.items[itemIndex].checked = checked;
         
         await this.shoppingListRepository.save(shoppingList);
     }

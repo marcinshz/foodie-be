@@ -18,9 +18,6 @@ export class RecipeService {
         if (!user) throw new Error('User not found');
         const data = {
             ...saveRecipeDto,
-            ingredients: JSON.stringify(saveRecipeDto.ingredients),
-            macros: JSON.stringify(saveRecipeDto.macros),
-            instructions: JSON.stringify(saveRecipeDto.instructions),
             user,
         };
         const recipe = this.recipeRepository.create(data);
@@ -34,17 +31,12 @@ export class RecipeService {
     }
 
     async getUserRecipes(userId: string): Promise<Recipe[]> {
-        return (await this.recipeRepository.find({
+        return await this.recipeRepository.find({
             where: {
                 user: {
                     id: userId
                 }
             }
-        })).map((recipe) => {
-            recipe.ingredients = JSON.parse(recipe.ingredients);
-            recipe.instructions = JSON.parse(recipe.instructions);
-            recipe.macros = JSON.parse(recipe.macros);
-            return recipe;
         });
     }
 
@@ -52,9 +44,6 @@ export class RecipeService {
         const recipe = await this.recipeRepository.findOneBy({id});
         console.log(recipe)
         if (!recipe) throw new Error('Recipe not found');
-        recipe.ingredients = JSON.parse(recipe.ingredients);
-        recipe.instructions = JSON.parse(recipe.instructions);
-        recipe.macros = JSON.parse(recipe.macros);
         return recipe;
     }
 }

@@ -27,8 +27,8 @@ export class MealPlanService {
             days: saveMealPlanDto.days,
             mealsPerDay: saveMealPlanDto.mealsPerDay,
             servings: saveMealPlanDto.servings,
-            dailyTargets: saveMealPlanDto.dailyTargets ? JSON.stringify(saveMealPlanDto.dailyTargets) : null,
-            plan: JSON.stringify(saveMealPlanDto.plan),
+            dailyTargets: saveMealPlanDto.dailyTargets || null,
+            plan: saveMealPlanDto.plan,
             user,
         };
         
@@ -53,13 +53,13 @@ export class MealPlanService {
             days: savedMealPlan.days,
             mealsPerDay: savedMealPlan.mealsPerDay,
             servings: savedMealPlan.servings,
-            dailyTargets: savedMealPlan.dailyTargets ? JSON.parse(savedMealPlan.dailyTargets) : undefined,
-            plan: JSON.parse(savedMealPlan.plan),
+            dailyTargets: savedMealPlan.dailyTargets || undefined,
+            plan: savedMealPlan.plan,
             shoppingLists: shoppingLists.map(sl => ({
                 id: sl.id,
                 shoppingDay: sl.shoppingDay,
                 validForDays: sl.validForDays,
-                items: JSON.parse(sl.items),
+                items: sl.items,
                 isPinned: sl.isPinned
             }))
         };
@@ -92,8 +92,8 @@ export class MealPlanService {
                     days: mealPlan.days,
                     mealsPerDay: mealPlan.mealsPerDay,
                     servings: mealPlan.servings,
-                    dailyTargets: mealPlan.dailyTargets ? JSON.parse(mealPlan.dailyTargets) : undefined,
-                    plan: JSON.parse(mealPlan.plan),
+                    dailyTargets: mealPlan.dailyTargets || undefined,
+                    plan: mealPlan.plan,
                     shoppingLists: shoppingLists
                 };
                 results.push(parsed);
@@ -117,8 +117,8 @@ export class MealPlanService {
             days: mealPlan.days,
             mealsPerDay: mealPlan.mealsPerDay,
             servings: mealPlan.servings,
-            dailyTargets: mealPlan.dailyTargets ? JSON.parse(mealPlan.dailyTargets) : undefined,
-            plan: JSON.parse(mealPlan.plan),
+            dailyTargets: mealPlan.dailyTargets || undefined,
+            plan: mealPlan.plan,
             shoppingLists: shoppingLists
         };
     }
@@ -133,8 +133,8 @@ export class MealPlanService {
         mealPlan.days = updateData.days;
         mealPlan.mealsPerDay = updateData.mealsPerDay;
         mealPlan.servings = updateData.servings;
-        mealPlan.dailyTargets = updateData.dailyTargets ? JSON.stringify(updateData.dailyTargets) : null;
-        mealPlan.plan = JSON.stringify(updateData.plan);
+        mealPlan.dailyTargets = updateData.dailyTargets || null;
+        mealPlan.plan = updateData.plan;
 
         const savedMealPlan = await this.mealPlanRepository.save(mealPlan);
         
@@ -148,8 +148,8 @@ export class MealPlanService {
             days: savedMealPlan.days,
             mealsPerDay: savedMealPlan.mealsPerDay,
             servings: savedMealPlan.servings,
-            dailyTargets: savedMealPlan.dailyTargets ? JSON.parse(savedMealPlan.dailyTargets) : undefined,
-            plan: JSON.parse(savedMealPlan.plan),
+            dailyTargets: savedMealPlan.dailyTargets || undefined,
+            plan: savedMealPlan.plan,
             shoppingLists: shoppingLists
         };
     }

@@ -13,8 +13,8 @@ export class ShoppingList {
     @Column('simple-array')
     validForDays: number[];
 
-    @Column('text')
-    items: string; // JSON stringified array of items
+    @Column('json')
+    items: any[];
 
     @Column({ default: false })
     isPinned: boolean;
