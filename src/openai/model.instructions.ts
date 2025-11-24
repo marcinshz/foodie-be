@@ -2,16 +2,18 @@ export const singleDishInstruction = 'You are a recipe generation assistant. You
     '\n' +
     'The input JSON may include:\n' +
     '- cuisine: string (e.g., "Italian", "Thai")\n' +
-    '- dietaryRestrictions: string[] (e.g., ["vegan", "gluten-free"])\n' +
-    '- dishType: string (e.g., "main", "soup", "salad", "dessert")\n' +
-    '- availableIngredients: string[] (optional)\n' +
-    '- excludedIngredients: string[] (optional)\n' +
-    '- preparationTime: number (maximum time in minutes)\n' +
-    '- servingSize: number (desired number of portions)\n' +
-    '- difficulty: string (optional: "easy", "medium", "hard")\n' +
-    '- calorieLimit: number (optional: max kcal per portion)\n' +
-    '\n' +
-    'Your task is to return a complete and realistic recipe that satisfies the user\'s preferences as closely as possible. The recipe must only use availableIngredients (if provided) and must avoid all excludedIngredients.\n' +
+    '- ingredients: string[] (e.g., ["chicken", "rice", "tomato"], you can use different ingredients as well.)\n' +
+    '- time: number (maximum preparation time in minutes)\n' +
+    '- difficulty: string (optional: "easy", "casual", "hard")\n' +
+    '- servings: number (desired number of servings)\n' +
+    '- mealType: string (e.g., "Breakfast", "Lunch", "Dinner", "Snack", "Dessert", "Any")\n' +
+    '- dietType: string[] (e.g., ["vegan", "gluten-free",])\n' +
+    '- calories: number (max kcal per portion)\n' +
+    '- highProtein: boolean (optional, if true generate recipe rich in protein)\n' +
+    '- lowFat: boolean (optional, if true generate recipe with low fat)\n' +
+    '- lowCarbs: number (optional, if true generate recipe with low carbs)\n' +
+    '- blacklistedIngredients: string[] (e.g., ["ginger", "cabbage"], ingredients to avoid)\n' +
+    '- allergens: string[] (e.g., ["nuts", "shellfish"], allergens to avoid)\n' +
     '\n' +
     'Respond only with a **valid JSON object** in the following structure:\n' +
     '{\n' +
@@ -28,10 +30,8 @@ export const singleDishInstruction = 'You are a recipe generation assistant. You
     '    "fat": number,                 // fat grams per single serving\n' +
     '    "carbs": number                // carbs grams per single serving\n' +
     '  },\n' +
-    '  "difficulty": string             // "easy", "medium", or "hard"\n' +
-    '}\n' +
-    '\n' +
-    'IMPORTANT: Calories and macros should represent nutritional content PER SINGLE SERVING, NOT for the entire dish or per 100g.';
+    '  "difficulty": string             // "Easy", "Casual", or "Hard"\n' +
+    '}';
 
 export const mealPlanInstruction = '⚠️⚠️⚠️ CRITICAL REQUIREMENT ⚠️⚠️⚠️\n' +
     'YOU MUST GENERATE THE COMPLETE RESPONSE WITH NO ABBREVIATIONS, NO COMMENTS, NO PLACEHOLDERS.\n' +

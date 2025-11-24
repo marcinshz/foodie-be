@@ -3,9 +3,8 @@ import {MealPlanInputDto} from "./dtos/meal-plan-input.dto";
 
 export const defaultConfig = (input: SingleDishInputDto | MealPlanInputDto, instructions: string) => {
     return {
-        model: "gpt-4.1",
-        input: JSON.stringify(input),
-        instructions: instructions + '\n\nREMINDER: Respond with ONLY valid JSON. No markdown, no explanations, no additional text.',
+        model: "gpt-5-mini",
+        input: instructions + '\n\n' + JSON.stringify(input),
     }
 }
 
