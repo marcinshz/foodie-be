@@ -3,12 +3,15 @@ import OpenAIApi from 'openai';
 import {ConfigService} from "@nestjs/config";
 import {defaultConfig} from "./model.configurations";
 import {SingleDishInputDto} from "./dtos/single-dish-input.dto";
-import {singleDishInstruction, mealPlanInstruction, replaceDishInstruction} from "./model.instructions";
+// COMMENTED OUT: Dish replacement feature
+// import {singleDishInstruction, mealPlanInstruction, replaceDishInstruction} from "./model.instructions";
+import {singleDishInstruction, mealPlanInstruction} from "./model.instructions";
 import {SingleDishOutputDto} from "./dtos/single-dish-output.dto";
 import {ImageDto} from "./dtos/image.dto";
 import {MealPlanInputDto} from "./dtos/meal-plan-input.dto";
 import {MealPlanOutputDto} from "./dtos/meal-plan-output.dto";
-import {ReplaceDishInputDto} from "./dtos/replace-dish-input.dto";
+// COMMENTED OUT: Dish replacement feature
+// import {ReplaceDishInputDto} from "./dtos/replace-dish-input.dto";
 
 @Injectable()
 export class OpenaiService {
@@ -50,8 +53,9 @@ export class OpenaiService {
         }
     }
 
-    async generateReplacementDish(input: ReplaceDishInputDto): Promise<SingleDishOutputDto> {
-        const response = await this.openai.responses.create(defaultConfig(input, replaceDishInstruction));
-        return JSON.parse(response.output_text);
-    }
+    // COMMENTED OUT: Dish replacement feature
+    // async generateReplacementDish(input: ReplaceDishInputDto): Promise<SingleDishOutputDto> {
+    //     const response = await this.openai.responses.create(defaultConfig(input, replaceDishInstruction));
+    //     return JSON.parse(response.output_text);
+    // }
 }
