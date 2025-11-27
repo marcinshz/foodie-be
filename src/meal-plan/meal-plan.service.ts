@@ -138,7 +138,7 @@ export class MealPlanService {
 
         const savedMealPlan = await this.mealPlanRepository.save(mealPlan);
         
-        // Get shopping lists (they remain unchanged when dish is replaced)
+        // Get shopping lists for this meal plan
         const shoppingLists = await this.shoppingListService.getShoppingListsByMealPlan(id);
         
         return {

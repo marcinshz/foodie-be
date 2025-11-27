@@ -119,18 +119,6 @@ export class ShoppingListService {
         await this.shoppingListRepository.remove(shoppingList);
     }
 
-    async deleteShoppingListsByMealPlan(mealPlanId: string): Promise<void> {
-        const shoppingLists = await this.shoppingListRepository.find({
-            where: {
-                mealPlan: {
-                    id: mealPlanId
-                }
-            }
-        });
-
-        await this.shoppingListRepository.remove(shoppingLists);
-    }
-
     async updateItemCheckedStatus(id: string, itemIndex: number, checked: boolean): Promise<void> {
         const shoppingList = await this.shoppingListRepository.findOneBy({id});
         if (!shoppingList) throw new Error('Shopping list not found');
