@@ -108,4 +108,82 @@ export class OpenaiService {
 
         return finalResult;
     }
+
+    async generateMealPlanCyclic(input: MealPlanInputDto): Promise<MealPlanOutputDto> {
+        const totalStartTime = Date.now();
+        const totalDays = input.days || 7;
+        const shoppingFrequency = input.shoppingFrequencyDays || 7;
+        const numberOfCycles = Math.ceil(totalDays / shoppingFrequency);
+        
+        console.log(`🔄 Generating meal plan (cyclic approach)...`);
+        console.log(`   📊 Total days: ${totalDays}, Shopping frequency: ${shoppingFrequency} days, Cycles: ${numberOfCycles}`);
+
+        const cycleResults: MealPlanOutputDto[] = [];
+
+        for (let cycle = 0; cycle < numberOfCycles; cycle++) {
+            const cycleStartTime = Date.now();
+            const dayOffset = cycle * shoppingFrequency;
+            const remainingDays = totalDays - dayOffset;
+            const cycleDays = Math.min(shoppingFrequency, remainingDays);
+            
+            console.log(`  🔁 Cycle ${cycle + 1}/${numberOfCycles}: Generating days ${dayOffset + 1}-${dayOffset + cycleDays}...`);
+
+            // Create input for this cycle
+            const cycleInput: MealPlanInputDto = {
+                ...input,
+                days: cycleDays,
+                shoppingFrequencyDays: cycleDays, // Each cycle is one shopping period
+            };
+
+            // Generate meal plan for this cycle using multi-step approach
+            const cycleResult = await this.generateMealPlanMultistep(cycleInput);
+            
+            // Adjust day numbers for cycles after the first
+            if (cycle > 0) {
+                // Adjust plan day numbers
+                cycleResult.plan = cycleResult.plan.map(dayPlan => ({
+                    ...dayPlan,
+                    day: dayPlan.day + dayOffset,
+                }));
+
+                // Adjust shopping list day numbers
+                if (cycleResult.shoppingLists) {
+                    cycleResult.shoppingLists = cycleResult.shoppingLists.map(shoppingList => ({
+                        ...shoppingList,
+                        shoppingDay: shoppingList.shoppingDay + dayOffset,
+                        validForDays: shoppingList.validForDays.map(day => day + dayOffset),
+                        items: shoppingList.items.map(item => ({
+                            ...item,
+                            usedInDays: item.usedInDays.map(day => day + dayOffset),
+                        })),
+                    }));
+                }
+            }
+
+            cycleResults.push(cycleResult);
+            
+            const cycleEndTime = Date.now();
+            const cycleDuration = cycleEndTime - cycleStartTime;
+            console.log(`  ✅ Cycle ${cycle + 1} completed in ${cycleDuration}ms (${(cycleDuration / 1000).toFixed(2)}s)`);
+        }
+
+        // Merge all cycles into one meal plan
+        console.log('  🔗 Merging cycles...');
+        const mergedResult: MealPlanOutputDto = {
+            title: 'Your Meal Plan',
+            description: '',
+            days: totalDays,
+            mealsPerDay: cycleResults[0].mealsPerDay,
+            servings: cycleResults[0].servings,
+            dailyTargets: cycleResults[0].dailyTargets,
+            plan: cycleResults.flatMap(cycle => cycle.plan),
+            shoppingLists: cycleResults.flatMap(cycle => cycle.shoppingLists || []),
+        };
+
+        const totalEndTime = Date.now();
+        const totalDuration = totalEndTime - totalStartTime;
+        console.log(`✅ Cyclic meal plan generation completed in ${totalDuration}ms (${(totalDuration / 1000).toFixed(2)}s)`);
+
+        return mergedResult;
+    }
 }
