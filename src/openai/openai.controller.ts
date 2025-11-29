@@ -19,4 +19,9 @@ export class OpenaiController {
     async getMealPlanDefault(@Body() mealPlanInput: MealPlanInputDto): Promise<MealPlanOutputDto> {
         return await this.openaiService.generateMealPlanDefault(mealPlanInput);
     }
+
+    @Post('meal-plan-multistep')
+    async getMealPlanMultistep(@Body() mealPlanInput: MealPlanInputDto): Promise<MealPlanOutputDto> {
+        return await this.openaiService.generateMealPlanMultistep(mealPlanInput);
+    }
 }
