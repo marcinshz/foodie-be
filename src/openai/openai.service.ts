@@ -127,30 +127,32 @@ export class OpenaiService {
         const shoppingFrequency = input.shoppingFrequencyDays || 7;
         const numberOfCycles = Math.ceil(totalDays / shoppingFrequency);
 
-        console.log(`🔄 Generating meal plan (cyclic approach)...`);
+        console.log(`🔄 Generating meal plan (cyclic approach - parallel)...`);
         console.log(`   📊 Total days: ${totalDays}, Shopping frequency: ${shoppingFrequency} days, Cycles: ${numberOfCycles}`);
 
-        const cycleResults: MealPlanOutputDto[] = [];
-
-        for (let cycle = 0; cycle < numberOfCycles; cycle++) {
+        const cyclePromises = Array.from({ length: numberOfCycles }, async (_, cycle) => {
+            const cycleStartTime = Date.now();
             const dayOffset = cycle * shoppingFrequency;
             const cycleDays = Math.min(shoppingFrequency, totalDays - dayOffset);
 
-            const { result: cycleResult } = await this.timedOperation(
-                `Cycle ${cycle + 1}/${numberOfCycles}: Generating days ${dayOffset + 1}-${dayOffset + cycleDays}`,
-                async () => {
-                    const cycleInput: MealPlanInputDto = {
-                        ...input,
-                        days: cycleDays,
-                        shoppingFrequencyDays: cycleDays,
-                    };
-                    return this.generateMealPlanMultistep(cycleInput);
-                },
-                '  🔁 '
-            );
+            console.log(`  🔁 Cycle ${cycle + 1}/${numberOfCycles}: Starting days ${dayOffset + 1}-${dayOffset + cycleDays}...`);
 
-            cycleResults.push(cycle > 0 ? this.adjustDayNumbers(cycleResult, dayOffset) : cycleResult);
-        }
+            const cycleInput: MealPlanInputDto = {
+                ...input,
+                days: cycleDays,
+                shoppingFrequencyDays: cycleDays,
+            };
+
+            const result = await this.generateMealPlanMultistep(cycleInput);
+            const adjusted = cycle > 0 ? this.adjustDayNumbers(result, dayOffset) : result;
+
+            console.log(`  ✅ Cycle ${cycle + 1} completed in ${this.formatDuration(Date.now() - cycleStartTime)}`);
+
+            return { cycle, result: adjusted };
+        });
+
+        const results = await Promise.all(cyclePromises);
+        const cycleResults = results.sort((a, b) => a.cycle - b.cycle).map(r => r.result);
 
         console.log('  🔗 Merging cycles...');
         const mergedResult: MealPlanOutputDto = {
