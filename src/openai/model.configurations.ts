@@ -1,11 +1,10 @@
 import {SingleDishInputDto} from "./dtos/single-dish-input.dto";
+import {MealPlanInputDto} from "./dtos/meal-plan-input.dto";
 
-// todo add option for MealPlanInput
-export const defaultConfig = (input: SingleDishInputDto, instructions: string) => {
+export const defaultConfig = (input: SingleDishInputDto | MealPlanInputDto, instructions: string) => {
     return {
-        model: "gpt-4.1",
-        input: JSON.stringify(input),
-        instructions,
+        model: "gpt-5.1",
+        input: instructions + '\n\n' + JSON.stringify(input),
     }
 }
 

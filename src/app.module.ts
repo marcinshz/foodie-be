@@ -8,6 +8,8 @@ import {AuthModule} from './auth/auth.module';
 import { OpenaiModule } from './openai/openai.module';
 import { ConfigModule } from '@nestjs/config';
 import { RecipeModule } from './recipe/recipe.module';
+import { MealPlanModule } from './meal-plan/meal-plan.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @Module({
     imports: [
@@ -30,6 +32,8 @@ import { RecipeModule } from './recipe/recipe.module';
         AuthModule,
         OpenaiModule,
         RecipeModule,
+        MealPlanModule,
+        ShoppingListModule,
     ],
     controllers: [AppController],
     providers: [AppService],
