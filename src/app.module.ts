@@ -2,9 +2,21 @@ import {Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
+import {UserModule} from './user/user.module';
+import {User} from "./user/user.entity";
+import {AuthModule} from './auth/auth.module';
+import { OpenaiModule } from './openai/openai.module';
+import { ConfigModule } from '@nestjs/config';
+import { RecipeModule } from './recipe/recipe.module';
+import { MealPlanModule } from './meal-plan/meal-plan.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: '.env'
+        }),
         TypeOrmModule.forRoot({
             type: 'postgres',
             host: 'localhost',
@@ -12,9 +24,16 @@ import {TypeOrmModule} from '@nestjs/typeorm';
             username: 'postgres',
             password: 'admin',
             database: 'foodie-db',
-            entities: [],
-            synchronize: true
+            entities: [User],
+            synchronize: true,
+            autoLoadEntities: true
         }),
+        UserModule,
+        AuthModule,
+        OpenaiModule,
+        RecipeModule,
+        MealPlanModule,
+        ShoppingListModule,
     ],
     controllers: [AppController],
     providers: [AppService],
