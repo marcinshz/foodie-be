@@ -37,4 +37,4 @@ Based on a user-defined form with dietary and lifestyle criteria, it generates r
 git clone https://github.com/yourusername/foodie.git
 cd foodie
 npm install
-npm run dev
+npm start
